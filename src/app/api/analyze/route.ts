@@ -2,9 +2,9 @@ import Anthropic from '@anthropic-ai/sdk'
 import { NextRequest, NextResponse } from 'next/server'
 import type { AnalysisResult } from '@/types/analysis'
 
-const client = new Anthropic()
-
 export async function POST(req: NextRequest) {
+  const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY })
+
   try {
     const { image, mimeType, productType } = await req.json()
 
@@ -41,7 +41,7 @@ Réponds UNIQUEMENT avec un objet JSON valide (sans markdown, sans backticks) av
 }`
 
     const response = await client.messages.create({
-      model: 'claude-sonnet-4-20250514',
+      model: 'claude-sonnet-4-5',
       max_tokens: 1024,
       messages: [
         {
